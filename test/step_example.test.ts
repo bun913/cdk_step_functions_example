@@ -6,9 +6,7 @@ import * as StepExample from '../lib/step_example-stack';
 // example resource in lib/step_example-stack.ts
 test('snapshot test', () => {
   const app = new cdk.App();
-//     // WHEN
   const stack = new StepExample.StepExampleStack(app, 'MyTestStack');
-//     // THEN
   const template = Template.fromStack(stack);
   expect(template).toMatchSnapshot();
 });
