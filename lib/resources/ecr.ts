@@ -3,10 +3,13 @@ import { Construct } from 'constructs';
 import * as ecr from 'aws-cdk-lib/aws-ecr'
 import { DockerImageAsset, Platform } from 'aws-cdk-lib/aws-ecr-assets';
 import * as ecrdeploy from 'cdk-ecr-deployment';
+import { ContainerImage } from 'aws-cdk-lib/aws-ecs'
 
 export class Ecr {
 
     private scope: Construct
+    private okRepo: ecr.Repository
+    private ngRepo: ecr.Repository
 
     constructor(scope: Construct) {
         this.scope = scope
@@ -33,5 +36,17 @@ export class Ecr {
                 dest: new ecrdeploy.DockerImageName(dic.repoUri)
             })
         })
+        this.okRepo = okRepo
+        this.ngRepo = ngRepo
+    }
+
+    public getOKImage(): ContainerImage {
+        const okImage = ContainerImage.fromEcrRepository(this.okRepo, 'latest')
+        return okImage
+    }
+
+    public getNGImage(): ContainerImage {
+        const ngImage = ContainerImage.fromEcrRepository(this.ngRepo, 'latest')
+        return ngImage
     }
 }

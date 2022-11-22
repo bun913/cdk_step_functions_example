@@ -2,6 +2,7 @@ import * as cdk from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 import { Ecr } from './resources/ecr'
 import { Network } from './resources/network'
+import { Ecs } from './resources/ecs';
 
 export class StepExampleStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
@@ -15,5 +16,8 @@ export class StepExampleStack extends cdk.Stack {
     // Network
     const network = new Network(this)
     network.createResources()
+    // ECS taskdef
+    const ecs = new Ecs(this, ecr.getOKImage(), ecr.getNGImage())
+    ecs.createResources()
   }
 }
