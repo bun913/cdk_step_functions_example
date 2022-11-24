@@ -17,7 +17,7 @@ export class StepExampleStack extends cdk.Stack {
     const network = new Network(this)
     network.createResources()
     // ECS taskdef
-    const ecs = new Ecs(this, ecr.getOKImage(), ecr.getNGImage())
+    const ecs = new Ecs(this, ecr.getOKImage(), ecr.getNGImage(), network.vpc)
     ecs.createResources()
   }
 }
