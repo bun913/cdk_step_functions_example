@@ -1,14 +1,18 @@
 import { FargateTaskDefinition } from 'aws-cdk-lib/aws-ecs';
 import { Construct } from 'constructs';
 import { ContainerImage, Cluster } from 'aws-cdk-lib/aws-ecs'
-import { Vpc,SecurityGroup } from 'aws-cdk-lib/aws-ec2';
+import { Vpc, SecurityGroup } from 'aws-cdk-lib/aws-ec2';
 
 export class Ecs {
 
+    // ToDo: この辺りの値の受け渡し改善できる
     private scope: Construct
     private okImage: ContainerImage
     private ngImage: ContainerImage
     private vpc: Vpc
+    public cluster: Cluster
+    public okTaskDef: FargateTaskDefinition
+    public ngTaskDef: FargateTaskDefinition
 
     constructor(scope: Construct, okImage: ContainerImage, ngImage: ContainerImage, vpc: Vpc) {
         this.scope = scope
@@ -45,11 +49,8 @@ export class Ecs {
             clusterName: 'StepExample',
             containerInsights: false,
         });
-        // RunTaskの際に利用するSG
-        const sg = new SecurityGroup(this.scope, 'RunTaskSG', {
-            vpc: this.vpc,
-            securityGroupName: 'stepExampleRuntaskSG',
-            allowAllOutbound: true
-        })
+        this.cluster = cluster
+        this.ngTaskDef = ngTaskDef
+        this.okTaskDef = okTaskDef
     }
 }
