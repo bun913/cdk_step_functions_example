@@ -4,6 +4,7 @@ import * as ecr from 'aws-cdk-lib/aws-ecr'
 import { DockerImageAsset, Platform } from 'aws-cdk-lib/aws-ecr-assets';
 import * as ecrdeploy from 'cdk-ecr-deployment';
 import { ContainerImage } from 'aws-cdk-lib/aws-ecs'
+import { RemovalPolicy } from 'aws-cdk-lib';
 
 export class Ecr {
 
@@ -16,8 +17,8 @@ export class Ecr {
     }
 
     public createResources() {
-        const okRepo = new ecr.Repository(this.scope, 'OKRepo')
-        const ngRepo = new ecr.Repository(this.scope, 'NGRepo')
+        const okRepo = new ecr.Repository(this.scope, 'OKRepo', { removalPolicy: RemovalPolicy.DESTROY })
+        const ngRepo = new ecr.Repository(this.scope, 'NGRepo', { removalPolicy: RemovalPolicy.DESTROY })
         const okImage = new DockerImageAsset(this.scope, 'OKImage', {
             directory: join('./', 'docker', 'ok'),
             platform: Platform.LINUX_AMD64

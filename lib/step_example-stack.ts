@@ -3,6 +3,7 @@ import { Construct } from 'constructs';
 import { Ecr } from './resources/ecr'
 import { Network } from './resources/network'
 import { Ecs } from './resources/ecs';
+import { StepFunc } from './resources/step_functions';
 
 export class StepExampleStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
@@ -17,7 +18,10 @@ export class StepExampleStack extends cdk.Stack {
     const network = new Network(this)
     network.createResources()
     // ECS taskdef
-    const ecs = new Ecs(this, ecr.getOKImage(), ecr.getNGImage())
+    const ecs = new Ecs(this, ecr.getOKImage(), ecr.getNGImage(), network.vpc)
     ecs.createResources()
+    // StepFunc
+    const sf = new StepFunc(this, ecs.okTaskDef, ecs.ngTaskDef, ecs.cluster, network.vpc)
+    sf.createResources()
   }
 }

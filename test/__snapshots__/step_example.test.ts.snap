@@ -2,6 +2,100 @@
 
 exports[`snapshot test 1`] = `
 Object {
+  "Mappings": Object {
+    "ServiceprincipalMap": Object {
+      "af-south-1": Object {
+        "states": "states.af-south-1.amazonaws.com",
+      },
+      "ap-east-1": Object {
+        "states": "states.ap-east-1.amazonaws.com",
+      },
+      "ap-northeast-1": Object {
+        "states": "states.ap-northeast-1.amazonaws.com",
+      },
+      "ap-northeast-2": Object {
+        "states": "states.ap-northeast-2.amazonaws.com",
+      },
+      "ap-northeast-3": Object {
+        "states": "states.ap-northeast-3.amazonaws.com",
+      },
+      "ap-south-1": Object {
+        "states": "states.ap-south-1.amazonaws.com",
+      },
+      "ap-southeast-1": Object {
+        "states": "states.ap-southeast-1.amazonaws.com",
+      },
+      "ap-southeast-2": Object {
+        "states": "states.ap-southeast-2.amazonaws.com",
+      },
+      "ap-southeast-3": Object {
+        "states": "states.ap-southeast-3.amazonaws.com",
+      },
+      "ca-central-1": Object {
+        "states": "states.ca-central-1.amazonaws.com",
+      },
+      "cn-north-1": Object {
+        "states": "states.cn-north-1.amazonaws.com",
+      },
+      "cn-northwest-1": Object {
+        "states": "states.cn-northwest-1.amazonaws.com",
+      },
+      "eu-central-1": Object {
+        "states": "states.eu-central-1.amazonaws.com",
+      },
+      "eu-north-1": Object {
+        "states": "states.eu-north-1.amazonaws.com",
+      },
+      "eu-south-1": Object {
+        "states": "states.eu-south-1.amazonaws.com",
+      },
+      "eu-south-2": Object {
+        "states": "states.eu-south-2.amazonaws.com",
+      },
+      "eu-west-1": Object {
+        "states": "states.eu-west-1.amazonaws.com",
+      },
+      "eu-west-2": Object {
+        "states": "states.eu-west-2.amazonaws.com",
+      },
+      "eu-west-3": Object {
+        "states": "states.eu-west-3.amazonaws.com",
+      },
+      "me-south-1": Object {
+        "states": "states.me-south-1.amazonaws.com",
+      },
+      "sa-east-1": Object {
+        "states": "states.sa-east-1.amazonaws.com",
+      },
+      "us-east-1": Object {
+        "states": "states.us-east-1.amazonaws.com",
+      },
+      "us-east-2": Object {
+        "states": "states.us-east-2.amazonaws.com",
+      },
+      "us-gov-east-1": Object {
+        "states": "states.us-gov-east-1.amazonaws.com",
+      },
+      "us-gov-west-1": Object {
+        "states": "states.us-gov-west-1.amazonaws.com",
+      },
+      "us-iso-east-1": Object {
+        "states": "states.amazonaws.com",
+      },
+      "us-iso-west-1": Object {
+        "states": "states.amazonaws.com",
+      },
+      "us-isob-east-1": Object {
+        "states": "states.amazonaws.com",
+      },
+      "us-west-1": Object {
+        "states": "states.us-west-1.amazonaws.com",
+      },
+      "us-west-2": Object {
+        "states": "states.us-west-2.amazonaws.com",
+      },
+    },
+  },
   "Parameters": Object {
     "BootstrapVersion": Object {
       "Default": "/cdk-bootstrap/hnb659fds/version",
@@ -107,15 +201,462 @@ Object {
       },
       "Type": "AWS::IAM::Policy",
     },
+    "ExampleStepStateMachine50C19156": Object {
+      "DependsOn": Array [
+        "ExampleStepStateMachineRoleDefaultPolicy381F0343",
+        "ExampleStepStateMachineRoleA7407187",
+      ],
+      "Properties": Object {
+        "DefinitionString": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "{\\"StartAt\\":\\"Step1 OKRun\\",\\"States\\":{\\"Step1 OKRun\\":{\\"Next\\":\\"Step2 NGRun\\",\\"Catch\\":[{\\"ErrorEquals\\":[\\"States.ALL\\"],\\"Next\\":\\"Step1Fail\\"}],\\"Type\\":\\"Task\\",\\"Resource\\":\\"arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":states:::ecs:runTask.sync\\",\\"Parameters\\":{\\"Cluster\\":\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "FargateCluster7CCD5F93",
+                  "Arn",
+                ],
+              },
+              "\\",\\"TaskDefinition\\":\\"MyTestStackokTaskDef08622CA9\\",\\"NetworkConfiguration\\":{\\"AwsvpcConfiguration\\":{\\"Subnets\\":[\\"",
+              Object {
+                "Ref": "VpcisolatedSubnet1SubnetE62B1B9B",
+              },
+              "\\",\\"",
+              Object {
+                "Ref": "VpcisolatedSubnet2Subnet39217055",
+              },
+              "\\"],\\"SecurityGroups\\":[\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "RunTaskSG87628AB4",
+                  "GroupId",
+                ],
+              },
+              "\\"]}},\\"LaunchType\\":\\"FARGATE\\"}},\\"Step2 NGRun\\":{\\"End\\":true,\\"Catch\\":[{\\"ErrorEquals\\":[\\"States.ALL\\"],\\"Next\\":\\"Step2Fail\\"}],\\"Type\\":\\"Task\\",\\"Resource\\":\\"arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":states:::ecs:runTask.sync\\",\\"Parameters\\":{\\"Cluster\\":\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "FargateCluster7CCD5F93",
+                  "Arn",
+                ],
+              },
+              "\\",\\"TaskDefinition\\":\\"MyTestStackngTaskDef25BE9FEC\\",\\"NetworkConfiguration\\":{\\"AwsvpcConfiguration\\":{\\"Subnets\\":[\\"",
+              Object {
+                "Ref": "VpcisolatedSubnet1SubnetE62B1B9B",
+              },
+              "\\",\\"",
+              Object {
+                "Ref": "VpcisolatedSubnet2Subnet39217055",
+              },
+              "\\"],\\"SecurityGroups\\":[\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "RunTaskSG87628AB4",
+                  "GroupId",
+                ],
+              },
+              "\\"]}},\\"LaunchType\\":\\"FARGATE\\"}},\\"Step2Fail\\":{\\"Type\\":\\"Fail\\"},\\"Step1Fail\\":{\\"Type\\":\\"Fail\\"}}}",
+            ],
+          ],
+        },
+        "RoleArn": Object {
+          "Fn::GetAtt": Array [
+            "ExampleStepStateMachineRoleA7407187",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "AWS::StepFunctions::StateMachine",
+    },
+    "ExampleStepStateMachineRoleA7407187": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": Object {
+                  "Fn::FindInMap": Array [
+                    "ServiceprincipalMap",
+                    Object {
+                      "Ref": "AWS::Region",
+                    },
+                    "states",
+                  ],
+                },
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "ExampleStepStateMachineRoleDefaultPolicy381F0343": Object {
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "ecs:RunTask",
+              "Effect": "Allow",
+              "Resource": Object {
+                "Fn::Join": Array [
+                  "",
+                  Array [
+                    "arn:",
+                    Object {
+                      "Fn::Select": Array [
+                        1,
+                        Object {
+                          "Fn::Split": Array [
+                            ":",
+                            Object {
+                              "Ref": "okTaskDef9BD319BE",
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                    ":",
+                    Object {
+                      "Fn::Select": Array [
+                        2,
+                        Object {
+                          "Fn::Split": Array [
+                            ":",
+                            Object {
+                              "Ref": "okTaskDef9BD319BE",
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                    ":",
+                    Object {
+                      "Fn::Select": Array [
+                        3,
+                        Object {
+                          "Fn::Split": Array [
+                            ":",
+                            Object {
+                              "Ref": "okTaskDef9BD319BE",
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                    ":",
+                    Object {
+                      "Fn::Select": Array [
+                        4,
+                        Object {
+                          "Fn::Split": Array [
+                            ":",
+                            Object {
+                              "Ref": "okTaskDef9BD319BE",
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                    ":",
+                    Object {
+                      "Fn::Select": Array [
+                        0,
+                        Object {
+                          "Fn::Split": Array [
+                            "/",
+                            Object {
+                              "Fn::Select": Array [
+                                5,
+                                Object {
+                                  "Fn::Split": Array [
+                                    ":",
+                                    Object {
+                                      "Ref": "okTaskDef9BD319BE",
+                                    },
+                                  ],
+                                },
+                              ],
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                    "/",
+                    Object {
+                      "Fn::Select": Array [
+                        1,
+                        Object {
+                          "Fn::Split": Array [
+                            "/",
+                            Object {
+                              "Fn::Select": Array [
+                                5,
+                                Object {
+                                  "Fn::Split": Array [
+                                    ":",
+                                    Object {
+                                      "Ref": "okTaskDef9BD319BE",
+                                    },
+                                  ],
+                                },
+                              ],
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                  ],
+                ],
+              },
+            },
+            Object {
+              "Action": Array [
+                "ecs:StopTask",
+                "ecs:DescribeTasks",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+            Object {
+              "Action": "iam:PassRole",
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Fn::GetAtt": Array [
+                    "okTaskDefTaskRole4624208F",
+                    "Arn",
+                  ],
+                },
+                Object {
+                  "Fn::GetAtt": Array [
+                    "okTaskDefExecutionRole5D288C3C",
+                    "Arn",
+                  ],
+                },
+              ],
+            },
+            Object {
+              "Action": Array [
+                "events:PutTargets",
+                "events:PutRule",
+                "events:DescribeRule",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Fn::Join": Array [
+                  "",
+                  Array [
+                    "arn:",
+                    Object {
+                      "Ref": "AWS::Partition",
+                    },
+                    ":events:",
+                    Object {
+                      "Ref": "AWS::Region",
+                    },
+                    ":",
+                    Object {
+                      "Ref": "AWS::AccountId",
+                    },
+                    ":rule/StepFunctionsGetEventsForECSTaskRule",
+                  ],
+                ],
+              },
+            },
+            Object {
+              "Action": "ecs:RunTask",
+              "Effect": "Allow",
+              "Resource": Object {
+                "Fn::Join": Array [
+                  "",
+                  Array [
+                    "arn:",
+                    Object {
+                      "Fn::Select": Array [
+                        1,
+                        Object {
+                          "Fn::Split": Array [
+                            ":",
+                            Object {
+                              "Ref": "ngTaskDefEB944C57",
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                    ":",
+                    Object {
+                      "Fn::Select": Array [
+                        2,
+                        Object {
+                          "Fn::Split": Array [
+                            ":",
+                            Object {
+                              "Ref": "ngTaskDefEB944C57",
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                    ":",
+                    Object {
+                      "Fn::Select": Array [
+                        3,
+                        Object {
+                          "Fn::Split": Array [
+                            ":",
+                            Object {
+                              "Ref": "ngTaskDefEB944C57",
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                    ":",
+                    Object {
+                      "Fn::Select": Array [
+                        4,
+                        Object {
+                          "Fn::Split": Array [
+                            ":",
+                            Object {
+                              "Ref": "ngTaskDefEB944C57",
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                    ":",
+                    Object {
+                      "Fn::Select": Array [
+                        0,
+                        Object {
+                          "Fn::Split": Array [
+                            "/",
+                            Object {
+                              "Fn::Select": Array [
+                                5,
+                                Object {
+                                  "Fn::Split": Array [
+                                    ":",
+                                    Object {
+                                      "Ref": "ngTaskDefEB944C57",
+                                    },
+                                  ],
+                                },
+                              ],
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                    "/",
+                    Object {
+                      "Fn::Select": Array [
+                        1,
+                        Object {
+                          "Fn::Split": Array [
+                            "/",
+                            Object {
+                              "Fn::Select": Array [
+                                5,
+                                Object {
+                                  "Fn::Split": Array [
+                                    ":",
+                                    Object {
+                                      "Ref": "ngTaskDefEB944C57",
+                                    },
+                                  ],
+                                },
+                              ],
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                  ],
+                ],
+              },
+            },
+            Object {
+              "Action": "iam:PassRole",
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Fn::GetAtt": Array [
+                    "ngTaskDefTaskRoleC52DD1D2",
+                    "Arn",
+                  ],
+                },
+                Object {
+                  "Fn::GetAtt": Array [
+                    "ngTaskDefExecutionRole9BBF10A1",
+                    "Arn",
+                  ],
+                },
+              ],
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "ExampleStepStateMachineRoleDefaultPolicy381F0343",
+        "Roles": Array [
+          Object {
+            "Ref": "ExampleStepStateMachineRoleA7407187",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "FargateCluster7CCD5F93": Object {
+      "Properties": Object {
+        "ClusterName": "StepExample",
+        "ClusterSettings": Array [
+          Object {
+            "Name": "containerInsights",
+            "Value": "disabled",
+          },
+        ],
+      },
+      "Type": "AWS::ECS::Cluster",
+    },
     "NGRepo57913A0B": Object {
-      "DeletionPolicy": "Retain",
+      "DeletionPolicy": "Delete",
       "Type": "AWS::ECR::Repository",
-      "UpdateReplacePolicy": "Retain",
+      "UpdateReplacePolicy": "Delete",
     },
     "OKRepoA996F699": Object {
-      "DeletionPolicy": "Retain",
+      "DeletionPolicy": "Delete",
       "Type": "AWS::ECR::Repository",
-      "UpdateReplacePolicy": "Retain",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "RunTaskSG87628AB4": Object {
+      "Properties": Object {
+        "GroupDescription": "MyTestStack/RunTaskSG",
+        "GroupName": "stepExampleRuntaskSG",
+        "SecurityGroupEgress": Array [
+          Object {
+            "CidrIp": "0.0.0.0/0",
+            "Description": "Allow all outbound traffic by default",
+            "IpProtocol": "-1",
+          },
+        ],
+        "VpcId": Object {
+          "Ref": "Vpc8378EB38",
+        },
+      },
+      "Type": "AWS::EC2::SecurityGroup",
     },
     "Vpc8378EB38": Object {
       "Properties": Object {
