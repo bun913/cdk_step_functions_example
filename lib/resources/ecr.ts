@@ -1,24 +1,24 @@
 import { join } from 'path'
 import { Construct } from 'constructs';
-import * as ecr from 'aws-cdk-lib/aws-ecr'
+import { Repository } from 'aws-cdk-lib/aws-ecr';
 import { DockerImageAsset, Platform } from 'aws-cdk-lib/aws-ecr-assets';
-import * as ecrdeploy from 'cdk-ecr-deployment';
+import { ECRDeployment, DockerImageName } from 'cdk-ecr-deployment';
 import { ContainerImage } from 'aws-cdk-lib/aws-ecs'
 import { RemovalPolicy } from 'aws-cdk-lib';
 
 export class Ecr {
 
     private scope: Construct
-    private okRepo: ecr.Repository
-    private ngRepo: ecr.Repository
+    private okRepo: Repository
+    private ngRepo: Repository
 
     constructor(scope: Construct) {
         this.scope = scope
     }
 
     public createResources() {
-        const okRepo = new ecr.Repository(this.scope, 'OKRepo', { removalPolicy: RemovalPolicy.DESTROY })
-        const ngRepo = new ecr.Repository(this.scope, 'NGRepo', { removalPolicy: RemovalPolicy.DESTROY })
+        const okRepo = new Repository(this.scope, 'OKRepo', { removalPolicy: RemovalPolicy.DESTROY })
+        const ngRepo = new Repository(this.scope, 'NGRepo', { removalPolicy: RemovalPolicy.DESTROY })
         const okImage = new DockerImageAsset(this.scope, 'OKImage', {
             directory: join('./', 'docker', 'ok'),
             platform: Platform.LINUX_AMD64
@@ -32,9 +32,9 @@ export class Ecr {
             { 'name': 'ngImage', 'imgSource': ngImage.imageUri, 'repoUri': ngRepo.repositoryUri }
         ]
         ecrDeploySet.forEach(dic => {
-            new ecrdeploy.ECRDeployment(this.scope, dic.name, {
-                src: new ecrdeploy.DockerImageName(dic.imgSource),
-                dest: new ecrdeploy.DockerImageName(dic.repoUri)
+            new ECRDeployment(this.scope, dic.name, {
+                src:  new DockerImageName(dic.imgSource),
+                dest: new DockerImageName(dic.repoUri)
             })
         })
         this.okRepo = okRepo
