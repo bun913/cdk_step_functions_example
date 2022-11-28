@@ -18,10 +18,10 @@ export class StepExampleStack extends cdk.Stack {
     const network = new Network(this)
     network.createResources()
     // ECS taskdef
-    const ecs = new Ecs({scope: this, okImage: ecr.getOKImage(), ngImage:ecr.getNGImage(), vpc: network.vpc})
+    const ecs = new Ecs({ scope: this, okImage: ecr.getOKImage(), ngImage: ecr.getNGImage(), vpc: network.vpc })
     ecs.createResources()
     // StepFunc
-    const sf = new StepFunc(this, ecs.okTaskDef, ecs.ngTaskDef, ecs.cluster, network.vpc)
+    const sf = new StepFunc({ scope: this, okTaskDef: ecs.okTaskDef, ngTaskDef: ecs.ngTaskDef, cluster: ecs.cluster, vpc: network.vpc })
     sf.createResources()
   }
 }

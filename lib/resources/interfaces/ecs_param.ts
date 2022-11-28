@@ -1,5 +1,5 @@
 import { Construct } from 'constructs';
-import { ContainerImage, Cluster } from 'aws-cdk-lib/aws-ecs'
+import { ContainerImage } from 'aws-cdk-lib/aws-ecs'
 import { Vpc, SecurityGroup } from 'aws-cdk-lib/aws-ec2';
 
 export interface EcsParam {
