@@ -1,51 +1,43 @@
+import { EcsParam } from './interfaces/ecs_param'
 import { FargateTaskDefinition } from 'aws-cdk-lib/aws-ecs';
-import { Construct } from 'constructs';
-import { ContainerImage, Cluster } from 'aws-cdk-lib/aws-ecs'
-import { Vpc, SecurityGroup } from 'aws-cdk-lib/aws-ec2';
+import { Cluster } from 'aws-cdk-lib/aws-ecs';
 
 export class Ecs {
 
-    // ToDo: この辺りの値の受け渡し改善できる
-    private scope: Construct
-    private okImage: ContainerImage
-    private ngImage: ContainerImage
-    private vpc: Vpc
+    private params: EcsParam
     public cluster: Cluster
     public okTaskDef: FargateTaskDefinition
     public ngTaskDef: FargateTaskDefinition
 
-    constructor(scope: Construct, okImage: ContainerImage, ngImage: ContainerImage, vpc: Vpc) {
-        this.scope = scope
-        this.okImage = okImage
-        this.ngImage = ngImage
-        this.vpc = vpc
+    constructor(params: EcsParam) {
+        this.params = params
     }
 
     public createResources() {
         // タスク定義
-        const okTaskDef = new FargateTaskDefinition(this.scope, 'okTaskDef', {
+        const okTaskDef = new FargateTaskDefinition(this.params.scope, 'okTaskDef', {
             memoryLimitMiB: 512,
             cpu: 256
         })
-        const ngTaskDef = new FargateTaskDefinition(this.scope, 'ngTaskDef', {
+        const ngTaskDef = new FargateTaskDefinition(this.params.scope, 'ngTaskDef', {
             memoryLimitMiB: 512,
             cpu: 256
         })
         const okContainer = okTaskDef.addContainer('okContainer', {
-            image: this.okImage,
+            image: this.params.okImage,
             containerName: 'ok',
             privileged: false,
             readonlyRootFilesystem: true
         })
         const ngContainer = ngTaskDef.addContainer('ngContainer', {
-            image: this.ngImage,
+            image: this.params.ngImage,
             containerName: 'ng',
             privileged: false,
             readonlyRootFilesystem: true
         })
         // ECSクラスタ
-        const cluster = new Cluster(this.scope, 'FargateCluster', {
-            vpc: this.vpc,
+        const cluster = new Cluster(this.params.scope, 'FargateCluster', {
+            vpc: this.params.vpc,
             clusterName: 'StepExample',
             containerInsights: false,
         });
