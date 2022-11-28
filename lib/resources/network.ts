@@ -1,11 +1,13 @@
 import * as ec2 from 'aws-cdk-lib/aws-ec2'
 import { Construct } from 'constructs';
+import { Resource } from './abstract/resource';
 
-export class Network {
+export class Network extends Resource {
     private scope: Construct
     public vpc: ec2.Vpc
 
     constructor(scope: Construct) {
+        super()
         this.scope = scope
     }
 
@@ -26,7 +28,7 @@ export class Network {
                 {
                     cidrMask: 24,
                     name: 'isolated',
-                    subnetType: ec2.SubnetType.PRIVATE_ISOLATED
+                    subnetType: ec2.SubnetType.PRIVATE_ISOLATED,
                 },
             ]
         })
