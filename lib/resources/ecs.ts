@@ -1,14 +1,16 @@
 import { EcsParam } from './interfaces/ecs_param';
 import { FargateTaskDefinition } from 'aws-cdk-lib/aws-ecs';
 import { Cluster } from 'aws-cdk-lib/aws-ecs';
+import { Resource } from './abstract/resource';
 
-export class Ecs {
+export class Ecs extends Resource {
   private params: EcsParam;
   public cluster: Cluster;
   public okTaskDef: FargateTaskDefinition;
   public ngTaskDef: FargateTaskDefinition;
 
   constructor(params: EcsParam) {
+    super();
     this.params = params;
   }
 

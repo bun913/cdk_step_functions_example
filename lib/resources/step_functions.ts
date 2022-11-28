@@ -13,11 +13,13 @@ import { StepFunctionInvokeAction } from 'aws-cdk-lib/aws-codepipeline-actions';
 import { SecurityGroup } from 'aws-cdk-lib/aws-ec2';
 import { TaskDefinition } from 'aws-cdk-lib/aws-ecs';
 import { StepFunctionsParam } from './interfaces/step_functions_param';
+import { Resource } from './abstract/resource';
 
-export class StepFunc {
+export class StepFunc extends Resource {
   readonly params: StepFunctionsParam;
 
   constructor(params: StepFunctionsParam) {
+    super();
     this.params = params;
   }
 

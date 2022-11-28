@@ -5,13 +5,15 @@ import { DockerImageAsset, Platform } from 'aws-cdk-lib/aws-ecr-assets';
 import { ECRDeployment, DockerImageName } from 'cdk-ecr-deployment';
 import { ContainerImage } from 'aws-cdk-lib/aws-ecs';
 import { RemovalPolicy } from 'aws-cdk-lib';
+import { Resource } from './abstract/resource';
 
-export class Ecr {
+export class Ecr extends Resource {
   private scope: Construct;
   private okRepo: Repository;
   private ngRepo: Repository;
 
   constructor(scope: Construct) {
+    super();
     this.scope = scope;
   }
 
